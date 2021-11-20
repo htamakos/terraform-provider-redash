@@ -16,9 +16,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/digitalpoetry/redash-client-go/redash"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/snowplow-devops/redash-client-go/redash"
 )
 
 func dataSourceRedashDataSource() *schema.Resource {
