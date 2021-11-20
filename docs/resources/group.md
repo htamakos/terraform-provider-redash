@@ -10,7 +10,7 @@ resource "redash_group" "runners" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_group.runners)}"
+  value = "${jsonencode(redash_group.runners)}"
 }
 ```
 

@@ -19,7 +19,7 @@ resource "redash_data_source" "acme_corp" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_data_source.acme_corp)}"
+  value = "${jsonencode(redash_data_source.acme_corp)}"
 }
 ```
 

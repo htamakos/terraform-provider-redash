@@ -6,10 +6,10 @@ Allows creation/management of a Redash Query.
 
 ```hcl
 resource "redash_query" "my_query" {
-  name           = "my_query"
-  data_source_id = redash_data_source.gps.id
-  query          = "SELECT 1+1"
-  description    = "hello world"
+  name           = "My Query"
+  data_source_id = redash_data_source.acme_corp.id
+  query          = "SELECT 1 + 1"
+  description    = "A query like no other"
 }
 
 

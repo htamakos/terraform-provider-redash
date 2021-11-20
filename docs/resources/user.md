@@ -12,7 +12,7 @@ resource "redash_user" "wcoyote" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_user.redash_user_rrunner)}"
+  value = "${jsonencode(redash_user.redash_user_rrunner)}"
 }
 ```
 
