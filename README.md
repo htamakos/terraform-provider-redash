@@ -10,7 +10,7 @@ Terraform provider for managing Redash configurations.
 Assuming git is installed:
 
 ```bash
- host> git clone https://github.com/snowplow-devops/terraform-provider-redash
+ host> git clone https://github.com/digitalpoetry/terraform-provider-redash
  host> cd terraform-provider-redash
  host> make test
  host> make
@@ -37,7 +37,7 @@ To format the golang code in the source directory:
 
 First download the pre-compiled binary for your platform from the release assets at the following links or generate the binaries locally using the provided `make` command:
 
-https://github.com/snowplow-devops/terraform-provider-redash/releases/latest
+https://github.com/digitalpoetry/terraform-provider-redash/releases/latest
 
 From here you will need to move the binary into your Terraform plugins directory - depending on your platform / installation this might change but generally speaking they are located at:
 
@@ -136,14 +136,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[actions-image]: https://github.com/snowplow-devops/terraform-provider-redash/workflows/ci/badge.svg
-[actions]: https://github.com/snowplow-devops/terraform-provider-redash/actions
+[actions-image]: https://github.com/digitalpoetry/terraform-provider-redash/workflows/ci/badge.svg
+[actions]: https://github.com/digitalpoetry/terraform-provider-redash/actions
 
-[release-image]: https://img.shields.io/github/v/release/snowplow-devops/terraform-provider-redash?style=flat&color=6ad7e5
-[releases]: https://github.com/snowplow-devops/terraform-provider-redash/releases
+[release-image]: https://img.shields.io/github/v/release/digitalpoetry/terraform-provider-redash?style=flat&color=6ad7e5
+[releases]: https://github.com/digitalpoetry/terraform-provider-redash/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
 [license]: http://www.apache.org/licenses/LICENSE-2.0
 
-[goreport-image]: https://goreportcard.com/badge/github.com/snowplow-devops/terraform-provider-redash
-[goreport]: https://goreportcard.com/report/github.com/snowplow-devops/terraform-provider-redash
+[goreport-image]: https://goreportcard.com/badge/github.com/digitalpoetry/terraform-provider-redash
+[goreport]: https://goreportcard.com/report/github.com/digitalpoetry/terraform-provider-redash
