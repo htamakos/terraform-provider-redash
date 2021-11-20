@@ -63,7 +63,7 @@ resource "redash_group_data_source_attachment" "wcoyote_acme" {
   group_id       = redash_group.geniuses.id
   data_source_id = redash_data_source.acme_corp.id
 
-    depends_on = [
+  depends_on = [
     redash_group.geniuses,
     redash_data_source.acme_corp,
   ]
@@ -73,8 +73,14 @@ resource "redash_group_data_source_attachment" "rrunner_gps" {
   group_id       = redash_group.runners.id
   data_source_id = redash_data_source.gps.id
 
-    depends_on = [
+  depends_on = [
     redash_data_source.gps,
     redash_group.runners,
   ]
+}
+
+resource "redash_query" "my_query" {
+  name           = "My Query"
+  data_source_id = redash_data_source.acme_corp.id
+  query          = "SELECT 1 + 1"
 }
