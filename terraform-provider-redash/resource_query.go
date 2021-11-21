@@ -15,9 +15,6 @@ func resourceRedashQuery() *schema.Resource {
 		ReadContext:   resourceRedashQueryRead,
 		UpdateContext: resourceRedashQueryUpdate,
 		DeleteContext: resourceRedashQueryArchive,
-		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
-		},
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:     schema.TypeString,
@@ -62,7 +59,7 @@ func resourceRedashQueryCreate(ctx context.Context, d *schema.ResourceData, meta
 	return diags
 }
 
-func resourceRedashQueryRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
@@ -96,7 +93,6 @@ func resourceRedashQueryUpdate(ctx context.Context, d *schema.ResourceData, meta
 	}
 
 	updatePayload := redash.QueryUpdatePayload{
-		ID:           id,
 		Name:         d.Get("name").(string),
 		Query:        d.Get("query").(string),
 		DataSourceID: d.Get("data_source_id").(int),
@@ -113,7 +109,7 @@ func resourceRedashQueryUpdate(ctx context.Context, d *schema.ResourceData, meta
 	return diags
 }
 
-func resourceRedashQueryArchive(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashQueryArchive(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
