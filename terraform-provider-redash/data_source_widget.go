@@ -11,7 +11,7 @@ import (
 func dataSourceRedashWidget() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-			"id": {
+			"widget_id": {
 				Type:     schema.TypeInt,
 				Required: true,
 			},
@@ -33,7 +33,7 @@ func dataSourceRedashWidgetRead(_ context.Context, d *schema.ResourceData, meta 
 
 	var diags diag.Diagnostics
 
-	widget, err := c.GetWidget(d.Get("dashboard_slug").(string), d.Get("id").(int))
+	widget, err := c.GetWidget(d.Get("dashboard_slug").(string), d.Get("widget_id").(int))
 	if err != nil {
 		return diag.FromErr(err)
 	}

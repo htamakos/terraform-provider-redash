@@ -65,7 +65,7 @@ func dataSourceRedashDataSource() *schema.Resource {
 	}
 }
 
-func dataSourceRedashDataSourceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceRedashDataSourceRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
@@ -77,6 +77,7 @@ func dataSourceRedashDataSourceRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
+	d.SetId(fmt.Sprint(dataSource.ID))
 	d.Set("name", dataSource.Name)
 	d.Set("scheduled_queue_name", dataSource.ScheduledQueueName)
 	d.Set("pause_reason", dataSource.PauseReason)
@@ -85,8 +86,6 @@ func dataSourceRedashDataSourceRead(ctx context.Context, d *schema.ResourceData,
 	d.Set("paused", dataSource.Paused)
 	d.Set("type", dataSource.Type)
 	d.Set("options", dataSource.Options)
-
-	d.SetId(fmt.Sprint(dataSource.ID))
 
 	return diags
 }

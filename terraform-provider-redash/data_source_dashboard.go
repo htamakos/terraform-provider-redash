@@ -39,6 +39,7 @@ func dataSourceRedashDashboardRead(_ context.Context, d *schema.ResourceData, me
 		return diag.FromErr(err)
 	}
 
+	d.SetId(dashboard.Slug)
 	d.Set("id", dashboard.ID)
 	d.Set("name", dashboard.Name)
 

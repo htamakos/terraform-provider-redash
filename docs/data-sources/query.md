@@ -6,7 +6,7 @@ Data source representation of a Redash Query
 
 ```hcl
 data "redash_query" "my_query" {
-    id = 1
+  id = 1
 }
 
 output "example" {

@@ -6,7 +6,7 @@ Data source representation of an active Redash Group
 
 ```hcl
 data "redash_group" "geniuses" {
-    id = 1
+  id = 1
 }
 
 output "example" {

@@ -1,6 +1,8 @@
 # Group Data Source Attachment Resource
 
-The Group Data Source Attachment Resource allows management of Redash Data Sources that a Redash Group has permissions to.
+The Group Data Source Attachment Resource allows management of Redash Data Sources for which a Redash Group has
+permissions.
+
 
 ## Example Usage
 
@@ -9,7 +11,7 @@ resource "redash_group_data_source_attachment" "wcoyote_acme" {
   group_id       = redash_group.geniuses.id
   data_source_id = redash_data_source.acme_corp.id
 
-    depends_on = [
+  depends_on = [
     redash_group.geniuses,
     redash_data_source.acme_corp,
   ]

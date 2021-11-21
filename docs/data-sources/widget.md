@@ -6,7 +6,7 @@ Allows creation/management of Redash widgets on dashboards.
 
 ```hcl
 data "redash_widget" "this" {
-  id = 27
+  id             = 27
   dashboard_slug = "service-slos"
 }
 

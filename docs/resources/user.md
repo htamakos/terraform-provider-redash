@@ -8,7 +8,7 @@ Allows creation/management of a Redash User.
 resource "redash_user" "wcoyote" {
   name   = "Wile E. Coyote"
   email  = "wcoyote@acme.com"
-  groups = [3,2]
+  groups = [3, 2]
 }
 
 output "example" {

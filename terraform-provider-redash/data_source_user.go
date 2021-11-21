@@ -37,7 +37,7 @@ func dataSourceRedashUser() *schema.Resource {
 	}
 }
 
-func dataSourceRedashUserRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceRedashUserRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
@@ -48,9 +48,8 @@ func dataSourceRedashUserRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", user.Name)
-
 	d.SetId(fmt.Sprint(user.ID))
+	d.Set("name", user.Name)
 
 	return diags
 }

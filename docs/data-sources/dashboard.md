@@ -1,6 +1,6 @@
 # Dashboard Data Source
 
-Data source representation of a Redash Dashboard.
+Data source representation of a Redash dashboard.
 
 ## Example Usage
 
