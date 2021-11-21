@@ -10,7 +10,7 @@ data "redash_query" "my_query" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_query.my_query)}"
+  value = jsonencode(data.redash_query.my_query)
 }
 ```
 

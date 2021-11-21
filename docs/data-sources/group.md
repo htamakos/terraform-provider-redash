@@ -10,7 +10,7 @@ data "redash_group" "geniuses" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_group.geniuses)}"
+  value = jsonencode(data.redash_group.geniuses)
 }
 ```
 

@@ -10,7 +10,7 @@ data "redash_data_source" "acme_corp" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_data_source.acme_corp)}"
+  value = jsonencode(data.redash_data_source.acme_corp)
 }
 ```
 

@@ -10,7 +10,7 @@ data "redash_user" "redash_user_rrunner" {
 }
 
 output "example" {
-  value = "${jsonencode(data.redash_user.redash_user_rrunner)}"
+  value = jsonencode(data.redash_user.redash_user_rrunner)
 }
 ```
 

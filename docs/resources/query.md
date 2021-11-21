@@ -14,7 +14,7 @@ resource "redash_query" "my_query" {
 
 
 output "example" {
-  value = "${jsonencode(redash_query.my_query)}"
+  value = jsonencode(redash_query.my_query)
 }
 ```
 
