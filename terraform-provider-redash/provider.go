@@ -44,19 +44,20 @@ func Provider() *schema.Provider {
 			"redash_group":                        resourceRedashGroup(),
 			"redash_group_data_source_attachment": resourceRedashGroupDataSourceAttachment(),
 			"redash_query":                        resourceRedashQuery(),
+			"redash_dashboard":                    resourceRedashDashboard(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"redash_data_source": dataSourceRedashDataSource(),
 			"redash_user":        dataSourceRedashUser(),
 			"redash_group":       dataSourceRedashGroup(),
 			"redash_query":       dataSourceRedashQuery(),
+			"redash_dashboard":   dataSourceRedashDashboard(),
 		},
-
 		ConfigureContextFunc: providerConfigure,
 	}
 }
 
-func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+func providerConfigure(_ context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	APIKey := d.Get("api_key").(string)
 	RedashURI := d.Get("redash_uri").(string)
 
