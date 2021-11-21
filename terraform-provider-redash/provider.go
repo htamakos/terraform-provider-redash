@@ -38,6 +38,15 @@ func Provider() *schema.Provider {
 				Description: "Redash API Key",
 			},
 		},
+		DataSourcesMap: map[string]*schema.Resource{
+			"redash_data_source":   dataSourceRedashDataSource(),
+			"redash_user":          dataSourceRedashUser(),
+			"redash_group":         dataSourceRedashGroup(),
+			"redash_query":         dataSourceRedashQuery(),
+			"redash_dashboard":     dataSourceRedashDashboard(),
+			"redash_widget":        dataSourceRedashWidget(),
+			"redash_visualization": dataSourceRedashVisualization(),
+		},
 		ResourcesMap: map[string]*schema.Resource{
 			"redash_data_source":                  resourceRedashDataSource(),
 			"redash_user":                         resourceRedashUser(),
@@ -46,14 +55,7 @@ func Provider() *schema.Provider {
 			"redash_query":                        resourceRedashQuery(),
 			"redash_dashboard":                    resourceRedashDashboard(),
 			"redash_widget":                       resourceRedashWidget(),
-		},
-		DataSourcesMap: map[string]*schema.Resource{
-			"redash_data_source": dataSourceRedashDataSource(),
-			"redash_user":        dataSourceRedashUser(),
-			"redash_group":       dataSourceRedashGroup(),
-			"redash_query":       dataSourceRedashQuery(),
-			"redash_dashboard":   dataSourceRedashDashboard(),
-			"redash_widget":      dataSourceRedashWidget(),
+			"redash_visualization":                resourceRedashVisualization(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
