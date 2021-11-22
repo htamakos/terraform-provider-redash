@@ -78,14 +78,14 @@ func dataSourceRedashDataSourceRead(_ context.Context, d *schema.ResourceData, m
 	}
 
 	d.SetId(fmt.Sprint(dataSource.ID))
-	d.Set("name", dataSource.Name)
-	d.Set("scheduled_queue_name", dataSource.ScheduledQueueName)
-	d.Set("pause_reason", dataSource.PauseReason)
-	d.Set("queue_name", dataSource.QueueName)
-	d.Set("syntax", dataSource.Syntax)
-	d.Set("paused", dataSource.Paused)
-	d.Set("type", dataSource.Type)
-	d.Set("options", dataSource.Options)
+	_ = d.Set("name", dataSource.Name)
+	_ = d.Set("scheduled_queue_name", dataSource.ScheduledQueueName)
+	_ = d.Set("pause_reason", dataSource.PauseReason)
+	_ = d.Set("queue_name", dataSource.QueueName)
+	_ = d.Set("syntax", dataSource.Syntax)
+	_ = d.Set("paused", dataSource.Paused)
+	_ = d.Set("type", dataSource.Type)
+	_ = d.Set("options", dataSource.Options)
 
 	return diags
 }

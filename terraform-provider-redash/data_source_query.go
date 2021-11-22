@@ -49,10 +49,10 @@ func dataSourceRedashQueryRead(ctx context.Context, d *schema.ResourceData, meta
 	}
 
 	d.SetId(fmt.Sprint(query.ID))
-	d.Set("name", query.Name)
-	d.Set("query", query.Query)
-	d.Set("data_source_id", query.DataSourceID)
-	d.Set("description", query.Description)
+	_ = d.Set("name", query.Name)
+	_ = d.Set("query", query.Query)
+	_ = d.Set("data_source_id", query.DataSourceID)
+	_ = d.Set("description", query.Description)
 
 	return diags
 }

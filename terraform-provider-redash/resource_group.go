@@ -87,9 +87,9 @@ func resourceRedashGroupRead(ctx context.Context, d *schema.ResourceData, meta i
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", &group.Name)
-	d.Set("type", &group.Type)
-	d.Set("permissions", &group.Permissions)
+	_ = d.Set("name", &group.Name)
+	_ = d.Set("type", &group.Type)
+	_ = d.Set("permissions", &group.Permissions)
 
 	d.SetId(fmt.Sprint(group.ID))
 

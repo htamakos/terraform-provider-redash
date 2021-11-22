@@ -49,7 +49,7 @@ func dataSourceRedashGroupRead(_ context.Context, d *schema.ResourceData, meta i
 	}
 
 	d.SetId(fmt.Sprint(group.ID))
-	d.Set("name", group.Name)
+	_ = d.Set("name", group.Name)
 
 	return diags
 }

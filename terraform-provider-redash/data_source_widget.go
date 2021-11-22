@@ -39,8 +39,8 @@ func dataSourceRedashWidgetRead(_ context.Context, d *schema.ResourceData, meta 
 	}
 
 	d.SetId(fmt.Sprint(widget.ID))
-	d.Set("dashboard_slug", d.Get("dashboard_slug"))
-	d.Set("dashboard_id", widget.DashboardID)
+	_ = d.Set("dashboard_slug", d.Get("dashboard_slug"))
+	_ = d.Set("dashboard_id", widget.DashboardID)
 
 	return diags
 }

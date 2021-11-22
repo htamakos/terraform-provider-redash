@@ -42,7 +42,7 @@ func dataSourceRedashVisualizationRead(_ context.Context, d *schema.ResourceData
 	}
 
 	d.SetId(fmt.Sprint(visualization.ID))
-	d.Set("name", visualization.Name)
+	_ = d.Set("name", visualization.Name)
 
 	return diags
 }

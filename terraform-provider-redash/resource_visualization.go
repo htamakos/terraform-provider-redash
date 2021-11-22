@@ -51,9 +51,9 @@ func resourceRedashVisualizationRead(_ context.Context, d *schema.ResourceData, 
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", visualization.Name)
-	d.Set("type", visualization.Type)
-	d.Set("description", visualization.Description)
+	_ = d.Set("name", visualization.Name)
+	_ = d.Set("type", visualization.Type)
+	_ = d.Set("description", visualization.Description)
 
 	return diags
 }
@@ -98,7 +98,7 @@ func resourceRedashVisualizationUpdate(_ context.Context, d *schema.ResourceData
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", visualization.Name)
+	_ = d.Set("name", visualization.Name)
 
 	return diags
 }

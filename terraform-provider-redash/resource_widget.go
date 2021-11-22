@@ -95,7 +95,6 @@ func resourceRedashWidgetCreate(_ context.Context, d *schema.ResourceData, meta 
 	if err != nil {
 		return diag.FromErr(err)
 	}
-	d.Set("dashboard_id", dashboard.ID)
 
 	widget, err := c.CreateWidget(&redash.WidgetCreatePayload{
 		DashboardID:     dashboard.ID,
@@ -123,6 +122,7 @@ func resourceRedashWidgetCreate(_ context.Context, d *schema.ResourceData, meta 
 	}
 
 	d.SetId(strconv.Itoa(widget.ID))
+	_ = d.Set("dashboard_id", dashboard.ID)
 
 	return diags
 }

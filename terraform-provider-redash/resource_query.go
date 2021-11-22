@@ -74,10 +74,10 @@ func resourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta int
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", query.Name)
-	d.Set("query", query.Query)
-	d.Set("data_source_id", query.DataSourceID)
-	d.Set("description", query.Description)
+	_ = d.Set("name", query.Name)
+	_ = d.Set("query", query.Query)
+	_ = d.Set("data_source_id", query.DataSourceID)
+	_ = d.Set("description", query.Description)
 
 	return diags
 }

@@ -498,14 +498,14 @@ func resourceRedashDataSourceRead(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	options := convertOptions(&dataSource.Options, "terraform")
-	d.Set("name", &dataSource.Name)
-	d.Set("scheduled_queue_name", &dataSource.ScheduledQueueName)
-	d.Set("pause_reason", &dataSource.PauseReason)
-	d.Set("queue_name", &dataSource.QueueName)
-	d.Set("syntax", &dataSource.Syntax)
-	d.Set("paused", &dataSource.Paused)
-	d.Set("type", &dataSource.Type)
-	d.Set("options", &options)
+	_ = d.Set("name", &dataSource.Name)
+	_ = d.Set("scheduled_queue_name", &dataSource.ScheduledQueueName)
+	_ = d.Set("pause_reason", &dataSource.PauseReason)
+	_ = d.Set("queue_name", &dataSource.QueueName)
+	_ = d.Set("syntax", &dataSource.Syntax)
+	_ = d.Set("paused", &dataSource.Paused)
+	_ = d.Set("type", &dataSource.Type)
+	_ = d.Set("options", &options)
 
 	d.SetId(fmt.Sprint(dataSource.ID))
 

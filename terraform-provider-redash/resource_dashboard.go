@@ -37,8 +37,8 @@ func resourceRedashDashboardRead(_ context.Context, d *schema.ResourceData, meta
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", dashboard.Name)
-	d.Set("slug", dashboard.Slug)
+	_ = d.Set("name", dashboard.Name)
+	_ = d.Set("slug", dashboard.Slug)
 
 	return diags
 }
@@ -57,8 +57,8 @@ func resourceRedashDashboardCreate(_ context.Context, d *schema.ResourceData, me
 	}
 
 	d.SetId(strconv.Itoa(dashboard.ID))
-	d.Set("name", dashboard.Name)
-	d.Set("slug", dashboard.Slug)
+	_ = d.Set("name", dashboard.Name)
+	_ = d.Set("slug", dashboard.Slug)
 
 	return diags
 }
@@ -81,8 +81,8 @@ func resourceRedashDashboardUpdate(_ context.Context, d *schema.ResourceData, me
 		return diag.FromErr(err)
 	}
 
-	d.Set("name", dashboard.Name)
-	d.Set("slug", dashboard.Slug)
+	_ = d.Set("name", dashboard.Name)
+	_ = d.Set("slug", dashboard.Slug)
 
 	return diags
 }

@@ -40,8 +40,8 @@ func dataSourceRedashDashboardRead(_ context.Context, d *schema.ResourceData, me
 	}
 
 	d.SetId(dashboard.Slug)
-	d.Set("id", dashboard.ID)
-	d.Set("name", dashboard.Name)
+	_ = d.Set("id", dashboard.ID)
+	_ = d.Set("name", dashboard.Name)
 
 	return diags
 }

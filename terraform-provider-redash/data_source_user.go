@@ -49,7 +49,7 @@ func dataSourceRedashUserRead(_ context.Context, d *schema.ResourceData, meta in
 	}
 
 	d.SetId(fmt.Sprint(user.ID))
-	d.Set("name", user.Name)
+	_ = d.Set("name", user.Name)
 
 	return diags
 }
