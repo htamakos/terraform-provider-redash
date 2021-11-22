@@ -13,7 +13,7 @@ func resourceRedashVisualization() *schema.Resource {
 		ReadContext:   resourceRedashVisualizationRead,
 		CreateContext: resourceRedashVisualizationCreate,
 		UpdateContext: resourceRedashVisualizationUpdate,
-		DeleteContext: resourceRedashVisualizationArchive,
+		DeleteContext: resourceRedashVisualizationDelete,
 		Schema: map[string]*schema.Schema{
 			"query_id": {
 				Type:     schema.TypeInt,
@@ -52,6 +52,8 @@ func resourceRedashVisualizationRead(_ context.Context, d *schema.ResourceData, 
 	}
 
 	d.Set("name", visualization.Name)
+	d.Set("type", visualization.Type)
+	d.Set("description", visualization.Description)
 
 	return diags
 }
@@ -62,10 +64,11 @@ func resourceRedashVisualizationCreate(_ context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 
 	payload := redash.VisualizationCreatePayload{
-		QueryId: d.Get("query_id").(int),
-		Name:    d.Get("name").(string),
-		Type:    d.Get("type").(string),
-		Options: redash.VisualizationOptions{},
+		QueryId:     d.Get("query_id").(int),
+		Name:        d.Get("name").(string),
+		Type:        d.Get("type").(string),
+		Description: d.Get("description").(string),
+		Options:     redash.VisualizationOptions{},
 	}
 	visualization, err := c.CreateVisualization(&payload)
 	if err != nil {
@@ -100,12 +103,17 @@ func resourceRedashVisualizationUpdate(_ context.Context, d *schema.ResourceData
 	return diags
 }
 
-func resourceRedashVisualizationArchive(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashVisualizationDelete(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
 
-	err := c.DeleteVisualization(d.Get("visualization_id").(int))
+	id, err := strconv.Atoi(d.Id())
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	err = c.DeleteVisualization(id)
 	if err != nil {
 		return diag.FromErr(err)
 	}
