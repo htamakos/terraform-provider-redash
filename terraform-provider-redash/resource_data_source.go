@@ -28,9 +28,6 @@ func resourceRedashDataSource() *schema.Resource {
 		ReadContext:   resourceRedashDataSourceRead,
 		UpdateContext: resourceRedashDataSourceUpdate,
 		DeleteContext: resourceRedashDataSourceDelete,
-		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
-		},
 		Schema: map[string]*schema.Schema{
 			"last_updated": {
 				Type:     schema.TypeString,
@@ -482,7 +479,7 @@ func resourceRedashDataSourceCreate(ctx context.Context, d *schema.ResourceData,
 	return diags
 }
 
-func resourceRedashDataSourceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashDataSourceRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
@@ -540,7 +537,7 @@ func resourceRedashDataSourceUpdate(ctx context.Context, d *schema.ResourceData,
 	return resourceRedashDataSourceRead(ctx, d, meta)
 }
 
-func resourceRedashDataSourceDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashDataSourceDelete(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics

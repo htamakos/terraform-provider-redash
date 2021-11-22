@@ -28,9 +28,6 @@ func resourceRedashUser() *schema.Resource {
 		ReadContext:   resourceRedashUserRead,
 		UpdateContext: resourceRedashUserUpdate,
 		DeleteContext: resourceRedashUserDelete,
-		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
-		},
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:     schema.TypeString,
@@ -136,7 +133,7 @@ func resourceRedashUserCreate(ctx context.Context, d *schema.ResourceData, meta 
 	return diags
 }
 
-func resourceRedashUserRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashUserRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
@@ -206,7 +203,7 @@ func resourceRedashUserUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	return resourceRedashUserRead(ctx, d, meta)
 }
 
-func resourceRedashUserDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashUserDelete(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 	var diags diag.Diagnostics
 

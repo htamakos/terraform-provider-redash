@@ -37,7 +37,7 @@ func dataSourceRedashQuery() *schema.Resource {
 	}
 }
 
-func dataSourceRedashQueryRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics

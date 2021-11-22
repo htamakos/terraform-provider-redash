@@ -28,9 +28,6 @@ func resourceRedashGroup() *schema.Resource {
 		ReadContext:   resourceRedashGroupRead,
 		UpdateContext: resourceRedashGroupUpdate,
 		DeleteContext: resourceRedashGroupDelete,
-		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
-		},
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:     schema.TypeString,
@@ -72,7 +69,7 @@ func resourceRedashGroupCreate(ctx context.Context, d *schema.ResourceData, meta
 	return diags
 }
 
-func resourceRedashGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashGroupRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
@@ -117,7 +114,7 @@ func resourceRedashGroupUpdate(ctx context.Context, d *schema.ResourceData, meta
 	return resourceRedashGroupRead(ctx, d, meta)
 }
 
-func resourceRedashGroupDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceRedashGroupDelete(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	c := meta.(*redash.Client)
 
 	var diags diag.Diagnostics
