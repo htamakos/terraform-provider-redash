@@ -1,11 +1,11 @@
-# Redash Terraform Provider #
+# Redash Terraform Provider
 [![Actions Status][actions-image]][actions] [![Go Report Card][goreport-image]][goreport] [![Release][release-image]][releases] [![License][license-image]][license]
 
-## Overview ##
+## Overview
 
 Terraform provider for managing Redash configurations.
 
-## Quick start ##
+## Quick start
 
 Assuming git is installed:
 
@@ -64,7 +64,8 @@ provider "redash" {
 
 With the provider configured, we can now use data sources and manage resources.
 
-### Users ###
+### Users
+
 ```hcl
 data "redash_user" "rrunner" {
   id = 1
@@ -78,7 +79,8 @@ resource "redash_user" "wcoyote" {
 
 ```
 
-### Groups ###
+### Groups
+
 ```hcl
 data "redash_group" "geniuses" {
   id = 35
@@ -89,7 +91,7 @@ resource "redash_group" "runners" {
 }
 ```
 
-### Data Sources ###
+### Data Sources
 
 Please note that the list of required/accepted options varies wildly by type. This is entirely dependent on the Redash installation that you are connecting to. For a detailed list of types and options, you can GET from the `/api/data_sources/types` endpoint on your Redash instance.
 
@@ -117,7 +119,68 @@ resource "redash_group_data_source_attachment" "wcoyote_acme" {
 }
 ```
 
-For more detailed documentation, please see the Terraform Provider documentaton at https://registry.terraform.io/providers/snowplow-devops/redash/latest
+### Queries
+
+```hcl
+data "redash_query" "my_query" {
+  id = 1
+}
+
+resource "redash_query" "my_query" {
+  name           = "My Query"
+  data_source_id = redash_data_source.acme_corp.id
+  query          = "SELECT 1 + 1"
+  description    = "A query like no other"
+}
+```
+
+### Dashboards
+
+```hcl
+data "redash_dashboard" "existing_dashboard" {
+  slug = "my-dashboard"
+}
+
+resource "redash_dashboard" "my_dashboard" {
+  name = "My dashboard"
+}
+```
+
+### Visualizations
+
+```hcl
+data "redash_visualization" "this" {
+  query_id         = 1
+  visualization_id = 7
+}
+
+resource "redash_visualization" "table" {
+  query_id = 1
+  name     = "Results table"
+  type     = "TABLE"
+}
+```
+
+### Widgets
+
+```hcl
+data "redash_widget" "this" {
+  id             = 27
+  dashboard_slug = "service-slos"
+}
+
+resource "redash_widget" "text_widget" {
+  dashboard_slug = redash_dashboard.this.slug
+  text           = "Welcome to my dashboard"
+}
+
+resource "redash_widget" "visualization_widget" {
+  dashboard_slug   = redash_dashboard.this.slug
+  visualization_id = 1
+}
+```
+
+For more detailed documentation, please see the Terraform Provider documentaton at https://registry.terraform.io/providers/digitalpoetry/redash/latest
 
 ### Publishing
 
@@ -125,7 +188,7 @@ This is handled through CI/CD on Github Actions. However all binaries will be ge
 
 ### Copyright and license
 
-The Terraform Redash Provider is copyright 2019-2020 Snowplow Analytics Ltd.
+The Terraform Redash Provider was forked from [snowplow-devops/terraform-provider-redash](https://github.com/snowplow-devops/terraform-provider-redash).
 
 Licensed under the **[Apache License, Version 2.0][license]** (the "License");
 you may not use this software except in compliance with the License.
