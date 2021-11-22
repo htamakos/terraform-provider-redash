@@ -3,7 +3,7 @@ module github.com/digitalpoetry/terraform-provider-redash
 go 1.17
 
 require (
-	github.com/digitalpoetry/redash-client-go v0.6.2
+	github.com/digitalpoetry/redash-client-go v0.6.3
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.9.0
 )
 
