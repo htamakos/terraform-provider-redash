@@ -29,13 +29,13 @@ func Provider() *schema.Provider {
 				Required:    true,
 				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("REDASH_API_KEY", ""),
-				Description: "Redash API Key",
+				Description: "Redash API key",
 			},
-			"redash_uri": {
+			"redash_host": {
 				Type:        schema.TypeString,
 				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("REDASH_URL", ""),
-				Description: "Redash API Key",
+				DefaultFunc: schema.EnvDefaultFunc("REDASH_HOST", ""),
+				Description: "Redash host URL",
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
