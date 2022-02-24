@@ -31,7 +31,7 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("REDASH_API_KEY", ""),
 				Description: "Redash API key",
 			},
-			"redash_host": {
+			"redash_uri": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("REDASH_HOST", ""),
