@@ -11,7 +11,7 @@ Terraform provider for managing Redash configurations.
 Assuming git is installed:
 
 ```bash
-$ git clone https://github.com/digitalpoetry/terraform-provider-redash
+$ git clone https://github.com/htamakos/terraform-provider-redash
 $ cd terraform-provider-redash
 $ make test
 $ make
@@ -39,7 +39,7 @@ at `build/coverage/coverage.html`.
 First download the pre-compiled binary for your platform from the release assets at the following links or generate the
 binaries locally using the provided `make` command:
 
-https://github.com/digitalpoetry/terraform-provider-redash/releases/latest
+https://github.com/htamakos/terraform-provider-redash/releases/latest
 
 From here you will need to move the binary into your Terraform plugins directory - depending on your platform /
 installation this might change but generally speaking they are located at:
@@ -187,7 +187,7 @@ resource "redash_widget" "visualization_widget" {
 ```
 
 For more detailed documentation, please see the Terraform Provider documentaton
-at [https://registry.terraform.io/providers/digitalpoetry/redash/latest](https://registry.terraform.io/providers/digitalpoetry/redash/latest)
+at [https://registry.terraform.io/providers/htamakos/redash/latest](https://registry.terraform.io/providers/digitalpoetry/redash/latest)
 
 ### Publishing
 
@@ -206,18 +206,18 @@ Unless required by applicable law or agreed to in writing, software distributed 
 AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
 language governing permissions and limitations under the License.
 
-[actions-image]: https://github.com/digitalpoetry/terraform-provider-redash/workflows/ci/badge.svg
+[actions-image]: https://github.com/htamakos/terraform-provider-redash/workflows/ci/badge.svg
 
-[actions]: https://github.com/digitalpoetry/terraform-provider-redash/actions
+[actions]: https://github.com/htamakos/terraform-provider-redash/actions
 
-[release-image]: https://img.shields.io/github/v/release/digitalpoetry/terraform-provider-redash?style=flat&color=6ad7e5
+[release-image]: https://img.shields.io/github/v/release/htamakos/terraform-provider-redash?style=flat&color=6ad7e5
 
-[releases]: https://github.com/digitalpoetry/terraform-provider-redash/releases
+[releases]: https://github.com/htamakos/terraform-provider-redash/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
 
 [license]: http://www.apache.org/licenses/LICENSE-2.0
 
-[goreport-image]: https://goreportcard.com/badge/github.com/digitalpoetry/terraform-provider-redash
+[goreport-image]: https://goreportcard.com/badge/github.com/htamakos/terraform-provider-redash
 
-[goreport]: https://goreportcard.com/report/github.com/digitalpoetry/terraform-provider-redash
+[goreport]: https://goreportcard.com/report/github.com/htamakos/terraform-provider-redash
