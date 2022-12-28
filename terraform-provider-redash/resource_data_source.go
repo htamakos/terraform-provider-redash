@@ -456,6 +456,8 @@ func resourceRedashDataSourceCreate(ctx context.Context, d *schema.ResourceData,
 	var diags diag.Diagnostics
 
 	options := d.Get("options").([]interface{})[0].(map[string]interface{})
+	options = convertOptions(&options, "redash")
+	removeEmptyOptions(options)
 	payload := redash.DataSource{
 		Name:               d.Get("name").(string),
 		Type:               d.Get("type").(string),
@@ -464,7 +466,7 @@ func resourceRedashDataSourceCreate(ctx context.Context, d *schema.ResourceData,
 		QueueName:          d.Get("queue_name").(string),
 		Syntax:             d.Get("syntax").(string),
 		Paused:             d.Get("paused").(int),
-		Options:            convertOptions(&options, "redash"),
+		Options:            options,
 	}
 
 	dataSource, err := c.CreateDataSource(&payload)
@@ -495,6 +497,8 @@ func resourceRedashDataSourceRead(_ context.Context, d *schema.ResourceData, met
 	}
 
 	options := convertOptions(&dataSource.Options, "terraform")
+	removeEmptyOptions(options)
+
 	_ = d.Set("name", &dataSource.Name)
 	_ = d.Set("scheduled_queue_name", &dataSource.ScheduledQueueName)
 	_ = d.Set("pause_reason", &dataSource.PauseReason)
@@ -518,6 +522,8 @@ func resourceRedashDataSourceUpdate(ctx context.Context, d *schema.ResourceData,
 	}
 
 	options := d.Get("options").([]interface{})[0].(map[string]interface{})
+	options = convertOptions(&options, "redash")
+	removeEmptyOptions(options)
 	payload := redash.DataSource{
 		Name:               d.Get("name").(string),
 		Type:               d.Get("type").(string),
@@ -526,7 +532,7 @@ func resourceRedashDataSourceUpdate(ctx context.Context, d *schema.ResourceData,
 		QueueName:          d.Get("queue_name").(string),
 		Syntax:             d.Get("syntax").(string),
 		Paused:             d.Get("paused").(int),
-		Options:            convertOptions(&options, "redash"),
+		Options:            options,
 	}
 
 	_, err = c.UpdateDataSource(id, &payload)
@@ -606,4 +612,22 @@ func convertOptions(options *map[string]interface{}, toFormat string) map[string
 	}
 
 	return convertedOptions
+}
+
+func removeEmptyOptions(options map[string]interface{}) {
+	var emptyKeys []string
+	for k, v := range options {
+		if v == nil {
+			emptyKeys = append(emptyKeys, k)
+		}
+
+		s, ok := v.(string)
+		if ok && s == "" {
+			emptyKeys = append(emptyKeys, k)
+		}
+	}
+
+	for _, k := range emptyKeys {
+		delete(options, k)
+	}
 }

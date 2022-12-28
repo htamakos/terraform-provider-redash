@@ -32,6 +32,13 @@ func resourceRedashQuery() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"tags": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
+			},
 		},
 	}
 }
@@ -53,10 +60,38 @@ func resourceRedashQueryCreate(ctx context.Context, d *schema.ResourceData, meta
 		return diag.FromErr(err)
 	}
 
+	tags, ok := d.Get("tags").([]interface{})
+	if ok {
+		updatePayload := redash.QueryUpdatePayload{
+			Name:         createPayload.Name,
+			Query:        createPayload.Query,
+			Description:  createPayload.Description,
+			DataSourceID: createPayload.DataSourceID,
+			Tags:         convertToStringList(tags),
+		}
+
+		_, err = c.UpdateQuery(query.ID, &updatePayload)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+	}
+
 	d.SetId(strconv.Itoa(query.ID))
 	diags = append(diags, resourceRedashQueryRead(ctx, d, meta)...)
 
 	return diags
+}
+
+func convertToStringList(slice []interface{}) []string {
+	var arr []string
+	for _, v := range slice {
+		if v == nil {
+			continue
+		}
+		arr = append(arr, v.(string))
+	}
+
+	return arr
 }
 
 func resourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -78,6 +113,7 @@ func resourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta int
 	_ = d.Set("query", query.Query)
 	_ = d.Set("data_source_id", query.DataSourceID)
 	_ = d.Set("description", query.Description)
+	_ = d.Set("tags", query.Tags)
 
 	return diags
 }
@@ -97,6 +133,11 @@ func resourceRedashQueryUpdate(ctx context.Context, d *schema.ResourceData, meta
 		Query:        d.Get("query").(string),
 		DataSourceID: d.Get("data_source_id").(int),
 		Description:  d.Get("description").(string),
+	}
+
+	tags, ok := d.Get("tags").([]interface{})
+	if ok {
+		updatePayload.Tags = convertToStringList(tags)
 	}
 
 	_, err = c.UpdateQuery(id, &updatePayload)

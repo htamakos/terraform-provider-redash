@@ -10,6 +10,7 @@ resource "redash_query" "my_query" {
   data_source_id = redash_data_source.acme_corp.id
   query          = "SELECT 1 + 1"
   description    = "A query like no other"
+  tags           = ["tag1", "tag2"]
 }
 
 
