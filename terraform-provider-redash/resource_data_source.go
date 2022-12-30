@@ -625,6 +625,11 @@ func removeEmptyOptions(options map[string]interface{}) {
 		if ok && s == "" {
 			emptyKeys = append(emptyKeys, k)
 		}
+
+		i, ok := v.(int)
+		if ok && i == 0 {
+			emptyKeys = append(emptyKeys, k)
+		}
 	}
 
 	for _, k := range emptyKeys {
