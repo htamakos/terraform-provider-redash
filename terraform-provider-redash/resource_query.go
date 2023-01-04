@@ -39,6 +39,10 @@ func resourceRedashQuery() *schema.Resource {
 				},
 				Optional: true,
 			},
+			"published": {
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
 		},
 	}
 }
@@ -71,6 +75,17 @@ func resourceRedashQueryCreate(ctx context.Context, d *schema.ResourceData, meta
 		}
 
 		_, err = c.UpdateQuery(query.ID, &updatePayload)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+	}
+
+	if d.Get("published").(bool) {
+		_, err = c.PublishQuery(query.ID, &redash.QueryPublishPayload{
+			ID:      query.ID,
+			IsDraft: false,
+			Version: 1,
+		})
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -114,6 +129,7 @@ func resourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta int
 	_ = d.Set("data_source_id", query.DataSourceID)
 	_ = d.Set("description", query.Description)
 	_ = d.Set("tags", query.Tags)
+	_ = d.Set("published", !query.IsDraft)
 
 	return diags
 }
@@ -133,6 +149,7 @@ func resourceRedashQueryUpdate(ctx context.Context, d *schema.ResourceData, meta
 		Query:        d.Get("query").(string),
 		DataSourceID: d.Get("data_source_id").(int),
 		Description:  d.Get("description").(string),
+		IsDraft:      !(d.Get("published").(bool)),
 	}
 
 	tags, ok := d.Get("tags").([]interface{})
