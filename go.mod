@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.1
-	github.com/htamakos/redash-client-go v0.1.0
+	github.com/htamakos/redash-client-go v0.1.1
 )
 
 require (
