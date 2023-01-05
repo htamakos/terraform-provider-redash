@@ -65,6 +65,9 @@ func resourceRedashWidget() *schema.Resource {
 				Default:  0,
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 	}
 }
 
