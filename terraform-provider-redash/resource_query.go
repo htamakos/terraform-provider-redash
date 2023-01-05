@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"reflect"
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -43,8 +44,72 @@ func resourceRedashQuery() *schema.Resource {
 				Type:     schema.TypeBool,
 				Optional: true,
 			},
+			"schedule": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: ``,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interval": {
+							Type:        schema.TypeInt,
+							Required:    true,
+							Description: ``,
+						},
+						"time": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: ``,
+						},
+						"day_of_week": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: ``,
+						},
+						"until": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: ``,
+						},
+					},
+				},
+			},
 		},
 	}
+}
+
+func expandQuerySchedule(v interface{}, d TerraformResourceData) (*redash.QuerySchedule, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	schedule := redash.QuerySchedule{}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+
+	interval := original["interval"]
+	if val := reflect.ValueOf(interval); val.IsValid() && !IsEmptyValue(val) {
+		schedule.Interval = int(val.Int())
+	} else {
+		return nil, nil
+	}
+
+	untilValue := original["until"]
+	if val := reflect.ValueOf(untilValue); val.IsValid() && !IsEmptyValue(val) {
+		schedule.Until = val.String()
+	}
+
+	timeValue := original["time"]
+	if val := reflect.ValueOf(timeValue); val.IsValid() && !IsEmptyValue(val) {
+		schedule.Time = val.String()
+	}
+
+	dayOfWeek := original["day_of_week"]
+	if val := reflect.ValueOf(dayOfWeek); val.IsValid() && !IsEmptyValue(val) {
+		schedule.DayOfWeek = val.String()
+	}
+
+	return &schedule, nil
 }
 
 func resourceRedashQueryCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -64,16 +129,33 @@ func resourceRedashQueryCreate(ctx context.Context, d *schema.ResourceData, meta
 		return diag.FromErr(err)
 	}
 
-	tags, ok := d.Get("tags").([]interface{})
-	if ok {
-		updatePayload := redash.QueryUpdatePayload{
-			Name:         createPayload.Name,
-			Query:        createPayload.Query,
-			Description:  createPayload.Description,
-			DataSourceID: createPayload.DataSourceID,
-			Tags:         convertToStringList(tags),
-		}
+	updatePayload := redash.QueryUpdatePayload{
+		Name:         createPayload.Name,
+		Query:        createPayload.Query,
+		Description:  createPayload.Description,
+		DataSourceID: createPayload.DataSourceID,
+	}
 
+	schedule, ok1 := d.GetOkExists("schedule")
+	if ok1 {
+		schedule, err := expandQuerySchedule(schedule, d)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+		updatePayload.Schedule = schedule
+	}
+
+	tags, ok2 := d.Get("tags").([]interface{})
+	if ok2 {
+		updatePayload.Tags = convertToStringList(tags)
+
+		_, err = c.UpdateQuery(query.ID, &updatePayload)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+	}
+
+	if ok1 || ok2 {
 		_, err = c.UpdateQuery(query.ID, &updatePayload)
 		if err != nil {
 			return diag.FromErr(err)
@@ -130,6 +212,7 @@ func resourceRedashQueryRead(_ context.Context, d *schema.ResourceData, meta int
 	_ = d.Set("description", query.Description)
 	_ = d.Set("tags", query.Tags)
 	_ = d.Set("published", !query.IsDraft)
+	_ = d.Set("schedule", query.Schedule)
 
 	return diags
 }
@@ -155,6 +238,17 @@ func resourceRedashQueryUpdate(ctx context.Context, d *schema.ResourceData, meta
 	tags, ok := d.Get("tags").([]interface{})
 	if ok {
 		updatePayload.Tags = convertToStringList(tags)
+	}
+
+	schedule, ok := d.GetOkExists("schedule")
+
+	if ok {
+		schedule, err := expandQuerySchedule(schedule, d)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+		updatePayload.Schedule = schedule
+
 	}
 
 	_, err = c.UpdateQuery(id, &updatePayload)

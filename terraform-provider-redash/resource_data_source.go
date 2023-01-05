@@ -457,7 +457,7 @@ func resourceRedashDataSourceCreate(ctx context.Context, d *schema.ResourceData,
 
 	options := d.Get("options").([]interface{})[0].(map[string]interface{})
 	options = convertOptions(&options, "redash")
-	removeEmptyOptions(options)
+	RemoveEmptyOptions(options)
 	payload := redash.DataSource{
 		Name:               d.Get("name").(string),
 		Type:               d.Get("type").(string),
@@ -497,7 +497,7 @@ func resourceRedashDataSourceRead(_ context.Context, d *schema.ResourceData, met
 	}
 
 	options := convertOptions(&dataSource.Options, "terraform")
-	removeEmptyOptions(options)
+	RemoveEmptyOptions(options)
 
 	_ = d.Set("name", &dataSource.Name)
 	_ = d.Set("scheduled_queue_name", &dataSource.ScheduledQueueName)
@@ -523,7 +523,7 @@ func resourceRedashDataSourceUpdate(ctx context.Context, d *schema.ResourceData,
 
 	options := d.Get("options").([]interface{})[0].(map[string]interface{})
 	options = convertOptions(&options, "redash")
-	removeEmptyOptions(options)
+	RemoveEmptyOptions(options)
 	payload := redash.DataSource{
 		Name:               d.Get("name").(string),
 		Type:               d.Get("type").(string),
@@ -612,27 +612,4 @@ func convertOptions(options *map[string]interface{}, toFormat string) map[string
 	}
 
 	return convertedOptions
-}
-
-func removeEmptyOptions(options map[string]interface{}) {
-	var emptyKeys []string
-	for k, v := range options {
-		if v == nil {
-			emptyKeys = append(emptyKeys, k)
-		}
-
-		s, ok := v.(string)
-		if ok && s == "" {
-			emptyKeys = append(emptyKeys, k)
-		}
-
-		i, ok := v.(int)
-		if ok && i == 0 {
-			emptyKeys = append(emptyKeys, k)
-		}
-	}
-
-	for _, k := range emptyKeys {
-		delete(options, k)
-	}
 }
