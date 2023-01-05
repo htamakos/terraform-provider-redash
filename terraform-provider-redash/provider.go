@@ -46,6 +46,7 @@ func Provider() *schema.Provider {
 			"redash_dashboard":     dataSourceRedashDashboard(),
 			"redash_widget":        dataSourceRedashWidget(),
 			"redash_visualization": dataSourceRedashVisualization(),
+			"redash_alert":         dataSourceRedashAlert(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"redash_data_source":                  resourceRedashDataSource(),
@@ -56,6 +57,9 @@ func Provider() *schema.Provider {
 			"redash_dashboard":                    resourceRedashDashboard(),
 			"redash_widget":                       resourceRedashWidget(),
 			"redash_visualization":                resourceRedashVisualization(),
+			"redash_alert":                        resourceRedashAlert(),
+			"redash_alert_destination":            resourceRedashAlertDestination(),
+			"redash_alert_destination_attachment": resourceRedashAlertDestinationAttachment(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
