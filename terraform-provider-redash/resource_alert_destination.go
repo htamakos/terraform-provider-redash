@@ -148,7 +148,7 @@ func resourceRedashAlertDestination() *schema.Resource {
 						"message_template": {
 							Type:     schema.TypeString,
 							Default:  "{alert_name} changed state to {new_state}.\\n{alert_url}\\n{query_url}",
-							Required: true,
+							Optional: true,
 						},
 					}},
 			},
